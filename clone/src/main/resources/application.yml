@@ -1,0 +1,47 @@
+spring:
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:clone
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+
+  jpa:
+    hibernate:
+      format_sql: true
+      show_sql: true
+      ddl-auto: update
+
+
+server:
+  error:
+    include-exception: false # Response? Exception ?? ??
+    include-message: always # Response? Exception Message ?? ??
+    include-stacktrace: on_param # Response? Stack Trace ?? ??
+  servlet:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+
+# echo 'spring-boot-security-jwt-hanghae-assignment-spring-boot-security-jwt-secret-key' | base64
+jwt:
+  secret: 4oCYc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LWhhbmdoYWUtYXNzaWdubWVudC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3Qtc2VjcmV0LWtleeKAmQo=
+
+
+# aws s3
+#cloud:
+#  aws:
+#    credentials:
+#      accessKey:
+#      secretKey:
+#    s3:
+#      bucket:
+#    region:
+#      static:
+#    stack:
+#      auto:
