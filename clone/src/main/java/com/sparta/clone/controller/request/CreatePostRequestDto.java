@@ -1,8 +1,10 @@
 package com.sparta.clone.controller.request;
 
 import com.sparta.clone.domain.Post;
+import com.sparta.clone.domain.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
@@ -12,19 +14,22 @@ import javax.validation.constraints.NotBlank;
 public class CreatePostRequestDto {
 
     @NotBlank
-    private String title;
 
+    private String title;
     @NotBlank
     private String content;
 
-    @NotBlank
-    private MultipartFile imageFile;
+    private User user;
 
-    public Post toPost(String imageUrl) {
+    private String imgUrl;
+
+
+    public Post toPost() {
         return Post.builder()
                 .title(title)
+                .user(user)
+                .imageUrl(imgUrl)
                 .content(content)
-                .imageUrl(imageUrl)
                 .likestate(false)
                 .likeCnt(0)
                 .build();

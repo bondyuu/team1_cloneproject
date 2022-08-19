@@ -1,7 +1,6 @@
 package com.sparta.clone.domain;
 
 
-import com.sparta.clone.controller.request.PostRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,8 +22,8 @@ public class Post extends Timestamped {
     @Column(nullable = false)
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_userId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_Id")
     private User user;
 
     @Column(nullable = false)
@@ -39,9 +38,9 @@ public class Post extends Timestamped {
     @Column
     private int likeCnt;
 
-    @Column
-    @OneToMany(mappedBy = "post",cascade = ALL, orphanRemoval = true)
-    private List<Comment> commentList;
+//    @Column
+//    @OneToMany(mappedBy = "post",cascade = ALL, orphanRemoval = true)
+//    private List<Comment> commentList;
 
 
     public void like () {
