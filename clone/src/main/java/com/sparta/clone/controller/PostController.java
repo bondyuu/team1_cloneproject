@@ -1,6 +1,7 @@
 package com.sparta.clone.controller;
 
 import com.sparta.clone.controller.request.CreatePostRequestDto;
+import com.sparta.clone.controller.response.LikeResponseDto;
 import com.sparta.clone.domain.Post;
 import com.sparta.clone.domain.UserDetailsImpl;
 import com.sparta.clone.service.PostService;
@@ -20,9 +21,9 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("")
-    public Post createpost(@RequestPart(value = "request", required = false) CreatePostRequestDto postRequestDto, @RequestPart(value = "file", required = false)MultipartFile imgFile, @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+    public Post createpost(CreatePostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
         postRequestDto.setUser(userDetails.getUser());
-        return postService.createpost(postRequestDto,imgFile);
+        return postService.createpost(postRequestDto);
     }
 
     @GetMapping("")
@@ -35,6 +36,10 @@ public class PostController {
         return postService.deletepost(postid);
     }
 
+//    @PostMapping("/like/{postid}")
+//    public LikeResponseDto likepost(@PathVariable Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails ) {
+//        return postService.likepost(postid,userDetails);
+//    }
 
 
 

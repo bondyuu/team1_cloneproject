@@ -21,10 +21,10 @@ public class CreatePostRequestDto {
 
     private User user;
 
-    private String imgUrl;
+    private MultipartFile imgFile;
 
 
-    public Post toPost() {
+    public Post toPost(String imgUrl) {
         return Post.builder()
                 .title(title)
                 .user(user)
