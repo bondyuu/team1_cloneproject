@@ -30,8 +30,6 @@ public class Heart {
     @JoinColumn(name = "post_id")
     private Post post;
 
-
-
     public Heart(CreateHeartRequestDto createHeartRequestDto) {
         this.likeuserid = createHeartRequestDto.getUserid();
         this.post = createHeartRequestDto.getPost();
@@ -41,8 +39,5 @@ public class Heart {
         this.post = post;
         post.addHeartList(this);
     }
-
-
-
 
 }

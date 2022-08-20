@@ -1,15 +1,19 @@
 package com.sparta.clone.service;
 
+import com.sparta.clone.controller.request.EditProfileRequestDto;
 import com.sparta.clone.controller.request.LoginRequestDto;
 import com.sparta.clone.controller.request.SignupRequestDto;
 import com.sparta.clone.controller.request.TokenDto;
 import com.sparta.clone.controller.response.LoginResponseDto;
 import com.sparta.clone.controller.response.MessageResponseDto;
+import com.sparta.clone.controller.response.ProfileResponseDto;
 import com.sparta.clone.controller.response.ResponseDto;
 import com.sparta.clone.domain.User;
+import com.sparta.clone.domain.UserDetailsImpl;
 import com.sparta.clone.global.error.ErrorCode;
 import com.sparta.clone.jwt.TokenProvider;
 import com.sparta.clone.repository.UserRepository;
+import com.sparta.clone.s3.S3UploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -26,6 +31,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+
+    private final S3UploadService s3UploadService;
+
 
     @Transactional
     public ResponseDto<?> signup(SignupRequestDto requestDto) {
@@ -94,4 +102,17 @@ public class UserService {
         response.addHeader("Access-Token-Expire-Time", tokenDto.getAccessTokenExpiresIn().toString());
     }
 
+    public ResponseDto<?> editprofile(EditProfileRequestDto requestDto,Long userid, UserDetailsImpl userDetails) throws IOException {
+
+        User user = userRepository.findById(userid).orElseThrow(() -> new RuntimeException("찾을수없음"));
+
+
+            String imgUrl = s3UploadService.upload(requestDto.getImgFIle(),"static");
+            user.editProfile(ProfileResponseDto.builder()
+                    .profileImage(imgUrl)
+                    .introduction(requestDto.getIntroduction())
+                    .build());
+
+            return ResponseDto.success("수정 완료!");
+    }
 }
