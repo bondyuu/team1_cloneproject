@@ -19,17 +19,21 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public Post createpost(@RequestPart(value = "request", required = false) CreatePostRequestDto postRequestDto, @RequestPart(value = "file", required = false)MultipartFile imgFile, @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
         postRequestDto.setUser(userDetails.getUser());
         return postService.createpost(postRequestDto,imgFile);
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<Post> getallpost() {
         return postService.getallpost();
     }
 
+    @DeleteMapping("/{postid}")
+    public Long deletepost(@PathVariable Long postid) {
+        return postService.deletepost(postid);
+    }
 
 
 
