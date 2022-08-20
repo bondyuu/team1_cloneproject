@@ -1,7 +1,9 @@
 package com.sparta.clone.controller;
 
 
+import com.sparta.clone.controller.request.IdCheckDto;
 import com.sparta.clone.controller.request.LoginRequestDto;
+import com.sparta.clone.controller.request.SearchRequestDto;
 import com.sparta.clone.controller.request.SignupRequestDto;
 import com.sparta.clone.controller.response.ResponseDto;
 import com.sparta.clone.service.UserService;
@@ -38,4 +40,15 @@ public class UserController {
         return userService.logout(request);
     }
 
+
+    //아이디 중복 확인
+    @PostMapping("api/users")
+    public ResponseDto<?> check(@RequestBody IdCheckDto idCheckDto) {
+        return userService.check(idCheckDto);
+    }
+
+    @PostMapping("/api/users/search")
+    public ResponseDto<?> search(@RequestBody SearchRequestDto requestDto) {
+        return userService.search(requestDto);
+    }
 }

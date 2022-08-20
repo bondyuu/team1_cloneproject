@@ -1,8 +1,7 @@
 package com.sparta.clone.service;
 
-import com.sparta.clone.controller.request.LoginRequestDto;
-import com.sparta.clone.controller.request.SignupRequestDto;
-import com.sparta.clone.controller.request.TokenDto;
+import com.sparta.clone.controller.dto.UserDto;
+import com.sparta.clone.controller.request.*;
 import com.sparta.clone.controller.response.LoginResponseDto;
 import com.sparta.clone.controller.response.MessageResponseDto;
 import com.sparta.clone.controller.response.ResponseDto;
@@ -17,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -80,6 +81,26 @@ public class UserService {
         }
 
         return tokenProvider.deleteRefreshToken(user);
+    }
+
+    public ResponseDto<?> check(IdCheckDto idCheckDto) {
+        User user = isPresentUser(idCheckDto.getUsername());
+        if (null == user) {
+            return ResponseDto.success(MessageResponseDto.builder().msg("사용가능한 아이디입니다.").build());
+        } else {
+            return ResponseDto.fail(ErrorCode.DUPLICATED_USERNAME);
+        }
+    }
+
+    public ResponseDto<?> search(SearchRequestDto requestDto) {
+        List<User> userList = userRepository.findAllByUsername(requestDto.getUsername());
+
+        if (userList.size() <= 5) {
+            return ResponseDto.success(userList.stream().map(user -> new UserDto(user)).collect(Collectors.toList()));
+        } else {
+            List<User> userList1 = userList.subList(0,5);
+            return ResponseDto.success(userList1.stream().map(user -> new UserDto(user)).collect(Collectors.toList()));
+        }
     }
 
     @Transactional(readOnly = true)
