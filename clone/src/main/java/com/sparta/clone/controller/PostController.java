@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,7 @@ public class PostController {
         return postService.createpost(postRequestDto);
     }
 
+
     @GetMapping("")
     public List<Post> getallpost() {
         return postService.getallpost();
@@ -36,10 +38,10 @@ public class PostController {
         return postService.deletepost(postid);
     }
 
-//    @PostMapping("/like/{postid}")
-//    public LikeResponseDto likepost(@PathVariable Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails ) {
-//        return postService.likepost(postid,userDetails);
-//    }
+    @PostMapping("/like/{postid}")
+    public LikeResponseDto likepost(@PathVariable Long postid, @AuthenticationPrincipal UserDetailsImpl userDetails ) {
+        return postService.likepost(postid,userDetails);
+    }
 
 
 

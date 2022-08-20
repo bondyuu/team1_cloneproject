@@ -10,6 +10,7 @@ import org.hibernate.Hibernate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Builder
@@ -33,9 +34,6 @@ public class User extends Timestamped {
 
     @Column
     private String introduction;
-
-
-
 
     @Override
     public boolean equals(Object o) {

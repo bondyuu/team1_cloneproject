@@ -5,6 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static javax.persistence.CascadeType.ALL;
 
 @Getter
@@ -19,8 +22,6 @@ public class Post extends Timestamped {
     @Id
     private Long id;
 
-    @Column(nullable = false)
-    private String title;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_Id")
@@ -33,15 +34,10 @@ public class Post extends Timestamped {
     private String imageUrl;
 
     @Column
-    private boolean likestate;
-
-    @Column
     private int likeCnt;
 
-//    @Column
-//    @OneToMany(mappedBy = "post",cascade = ALL, orphanRemoval = true)
-//    private List<Comment> commentList;
-
+    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
+    private List<Heart> heartList = new LinkedList<>();
 
     public void like () {
         this.likeCnt += 1;
@@ -50,5 +46,8 @@ public class Post extends Timestamped {
         this.likeCnt -= 1;
     }
 
+    public void addHeartList(Heart heart) {
+        heartList.add(heart);
+    }
 
 }
