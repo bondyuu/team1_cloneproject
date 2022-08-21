@@ -1,7 +1,16 @@
 package com.sparta.clone.domain;
 
-    @Column
-    private String profileUrl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +44,9 @@ public class User extends Timestamped {
 
     @Column
     private String introduction;
+
+    @Column
+    private String profileUrl;
 
     @Override
     public boolean equals(Object o) {

@@ -92,8 +92,8 @@ public class UserService {
         }
     }
 
-    public ResponseDto<?> search(SearchRequestDto requestDto) {
-        List<User> userList = userRepository.findAllByUsername(requestDto.getUsername());
+    public ResponseDto<?> search(String username) {
+        List<User> userList = userRepository.findAllByUsernameContainingIgnoreCase(username);
 
         if (userList.size() <= 5) {
             return ResponseDto.success(userList.stream().map(user -> new UserDto(user)).collect(Collectors.toList()));

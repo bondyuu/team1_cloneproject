@@ -47,8 +47,9 @@ public class UserController {
         return userService.check(idCheckDto);
     }
 
-    @PostMapping("/api/users/search")
-    public ResponseDto<?> search(@RequestBody SearchRequestDto requestDto) {
-        return userService.search(requestDto);
+    //아이디 검색
+    @GetMapping(path = "/api/users/search", params = "username")
+    public ResponseDto<?> search(@RequestParam String username) {
+        return userService.search(username);
     }
 }

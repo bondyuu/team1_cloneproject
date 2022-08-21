@@ -1,6 +1,7 @@
 package com.sparta.clone.controller;
 
 import com.sparta.clone.controller.request.CreatePostRequestDto;
+import com.sparta.clone.controller.response.LikeResponseDto;
 import com.sparta.clone.domain.Post;
 import com.sparta.clone.domain.UserDetailsImpl;
 import com.sparta.clone.service.PostService;

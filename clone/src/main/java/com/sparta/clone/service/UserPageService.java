@@ -11,9 +11,9 @@ import com.sparta.clone.jwt.TokenProvider;
 import com.sparta.clone.repository.FollowRepository;
 import com.sparta.clone.repository.HeartRepository;
 import com.sparta.clone.repository.PostRepository;
+import com.sparta.clone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -22,27 +22,17 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MyPageService {
-
+public class UserPageService {
     private final TokenProvider tokenProvider;
     private final PostRepository postRepository;
     private final FollowRepository followRepository;
-
     private final HeartRepository heartRepository;
+    private final UserRepository userRepository;
 
-    @Transactional
-    public ResponseDto<?> getMyPage(HttpServletRequest request) {
-        if(request.getHeader("Refresh-Token")==null) {
-            return ResponseDto.fail(ErrorCode.LOGIN_REQUIRED);
-        }
-        if(request.getHeader("Authorization") == null) {
-            return ResponseDto.fail(ErrorCode.LOGIN_REQUIRED);
-        }
-
-        User user = validateUser(request);
-        if (null == user) {
-            return ResponseDto.fail(ErrorCode.INVALID_TOKEN);
-        }
+    public ResponseDto<?> getUserPage(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new IllegalArgumentException("회원정보가 없습니다.")
+        );
 
         //내가 작성한 게시글
         List<PostDto> postList = getPostList(user);
@@ -66,6 +56,7 @@ public class MyPageService {
                 .likePostList(likePostList)
                 .build()
         );
+
     }
 
     public List<PostDto> getPostList(User user) {
@@ -91,10 +82,4 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
-    public User validateUser(HttpServletRequest request) {
-        if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
-            return null;
-        }
-        return tokenProvider.getUserFromAuthentication();
-    }
 }
