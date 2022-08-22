@@ -1,6 +1,7 @@
 package com.sparta.clone.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,10 +41,11 @@ public class Post extends Timestamped {
     private int likeCnt;
 
     @Column
-    @OneToMany(mappedBy = "post",cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post",cascade = ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Comment> commentList;
 
     @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Heart> heartList = new LinkedList<>();
 
     public void addHeartList(Heart heart) {

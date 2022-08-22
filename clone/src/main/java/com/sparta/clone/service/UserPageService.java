@@ -41,13 +41,13 @@ public class UserPageService {
         List<PostDto> likePostList = getLikePostList(user);
 
         Long postCnt = (long) postList.size();
-        Long follower = (long)followRepository.findAllByUsernameFrom(user.getUsername()).size();
-        Long following = (long)followRepository.findAllByUsernameTo(user.getUsername()).size();
+        Long follower = (long)followRepository.findAllByUserFrom(user).size();
+        Long following = (long)followRepository.findAllByUserTo(user).size();
 
         return ResponseDto.success(MyPageResponseDto.builder()
                 .userId(user.getUserId())
                 .username(user.getUsername())
-                .profileUrl(user.getProfileUrl())
+                .profileUrl(user.getImgUrl())
                 .introduction(user.getIntroduction())
                 .follower(follower)
                 .following(following)

@@ -19,7 +19,11 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long followId;
 
-    private String usernameTo;
+    @ManyToOne
+    @JoinColumn(name = "userTo")
+    private User userTo;
 
-    private String usernameFrom;
+    @ManyToOne
+    @JoinColumn(name = "userFrom")
+    private User userFrom;
 }

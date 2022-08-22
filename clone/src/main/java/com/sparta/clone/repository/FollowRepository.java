@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface FollowRepository extends JpaRepository<Follow, Long> {
 
-    List<Follow> findAllByUsernameTo(String username);
-    List<Follow> findAllByUsernameFrom(String username);
-    void deleteByUsernameFromAndUsernameTo(String usernameFrom, String usernameTo);
+    List<Follow> findAllByUserTo(User user);
+    List<Follow> findAllByUserFrom(User user);
+    void deleteByUserFromAndUserTo(User userFrom, User userTo);
 
 }

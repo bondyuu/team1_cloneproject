@@ -46,21 +46,15 @@ public class FollowService {
                 () -> new IllegalArgumentException("회원 정보가 없습니다.")
         );
 
-        System.out.println(user1.getUsername());
-        System.out.println(user2.getUsername());
         if (requestDto.getFollowState() == 0) {
-            System.out.println(user1);
-            System.out.println(user2);
             followRepository.save(Follow.builder()
-                    .usernameTo(user1.getUsername())
-                    .usernameFrom(user2.getUsername())
+                    .userTo(user1)
+                    .userFrom(user2)
                     .build());
 
             return ResponseDto.success(FollowResponseDto.builder().isFollow(true).build());
         } else {
-            System.out.println(user1);
-            System.out.println(user2);
-            followRepository.deleteByUsernameFromAndUsernameTo(user2.getUsername(),user1.getUsername());
+            followRepository.deleteByUserFromAndUserTo(user2,user1);
             return ResponseDto.success(FollowResponseDto.builder().isFollow(false).build());
         }
 

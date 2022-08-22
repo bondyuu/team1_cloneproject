@@ -18,6 +18,6 @@ public class UserDto {
         this.userId = user.getUserId();
         this.username = user.getUsername();
         this.introduction = user.getIntroduction();
-        this.profileUrl = user.getProfileUrl();
+        this.profileUrl = user.getImgUrl();
     }
 }
