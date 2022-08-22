@@ -8,6 +8,7 @@ import com.sparta.clone.controller.response.LikeResponseDto;
 import com.sparta.clone.controller.response.ResponseDto;
 import com.sparta.clone.domain.Heart;
 import com.sparta.clone.domain.Post;
+import com.sparta.clone.domain.User;
 import com.sparta.clone.domain.UserDetailsImpl;
 import com.sparta.clone.repository.CommentRepository;
 import com.sparta.clone.repository.HeartRepository;
@@ -43,7 +44,6 @@ public class PostService {
     public ResponseDto<?> getallpost() {
         List<Post> postList = postRepository.findAll();
 //        postList.forEach(post -> post.setCommentList(commentRepository.findAllByPost(post)));
-
         return ResponseDto.success(postList);
     }
 
@@ -95,4 +95,10 @@ public class PostService {
         Post post = postRepository.findById(postid).orElseThrow(() -> new RuntimeException("해당하는 포스팅없음"));
         return ResponseDto.success(post);
     }
+
+    public Boolean likestate(Post post, User user) {
+        Heart heart = heartRepository.findByPostAndAndLikeuserid(post,user.getUserId());
+        return heart != null;
+    }
+
 }

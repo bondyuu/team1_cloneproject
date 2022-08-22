@@ -20,11 +20,8 @@ public class Heart {
     @Id
     @JsonIgnore
     private Long id;
-
     @Column
     private Long likeuserid;
-
-
     @JsonIgnore
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id")
