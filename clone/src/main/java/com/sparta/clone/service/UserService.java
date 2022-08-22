@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -104,10 +105,15 @@ public class UserService {
 
     public ResponseDto<?> editprofile(EditProfileRequestDto requestDto,Long userid, UserDetailsImpl userDetails) throws IOException {
 
+        if(!Objects.equals(userid, userDetails.getUser().getUserId())) {
+            return ResponseDto.fail(ErrorCode.POST_UNAUTHORIZED);
+        }
+
         User user = userRepository.findById(userid).orElseThrow(() -> new RuntimeException("찾을수없음"));
 
 
             String imgUrl = s3UploadService.upload(requestDto.getImgFIle(),"static");
+
             user.editProfile(ProfileResponseDto.builder()
                     .profileImage(imgUrl)
                     .introduction(requestDto.getIntroduction())
