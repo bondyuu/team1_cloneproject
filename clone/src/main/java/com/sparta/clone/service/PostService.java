@@ -5,6 +5,7 @@ import com.sparta.clone.controller.request.CreateHeartRequestDto;
 import com.sparta.clone.controller.request.CreatePostRequestDto;
 import com.sparta.clone.controller.request.PostRequestDto;
 import com.sparta.clone.controller.response.LikeResponseDto;
+import com.sparta.clone.controller.response.PostResponseDto;
 import com.sparta.clone.controller.response.ResponseDto;
 import com.sparta.clone.domain.Heart;
 import com.sparta.clone.domain.Post;
@@ -41,10 +42,20 @@ public class PostService {
     }
 
     //포스트 전체 조회
-    public ResponseDto<?> getallpost() {
+    public ResponseDto<?> getallpost(UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
         List<Post> postList = postRepository.findAll();
 //        postList.forEach(post -> post.setCommentList(commentRepository.findAllByPost(post)));
-        return ResponseDto.success(postList);
+        return ResponseDto.success(postList.stream()
+                .map(post -> PostResponseDto.builder()
+                        .postId(post.getId())
+                        .userId(post.getUser().getUserId())
+                        .username(post.getUser().getUsername())
+                        .profileUrl(post.getUser().getImgUrl())
+                        .likeCnt((long)post.getLikeCnt())
+                        .postUrl(post.getImageUrl())
+                        .likeState(likestate(post,user))
+                        .build()));
     }
 
     //포스트 삭제
@@ -91,9 +102,20 @@ public class PostService {
         );
     }
 
-    public ResponseDto<?> getdetailpost(long postid) {
+    public ResponseDto<?> getdetailpost(long postid, UserDetailsImpl userDetails) {
+        User user = userDetails.getUser();
         Post post = postRepository.findById(postid).orElseThrow(() -> new RuntimeException("해당하는 포스팅없음"));
-        return ResponseDto.success(post);
+
+
+        return ResponseDto.success(PostResponseDto.builder()
+                .postId(post.getId())
+                .userId(post.getUser().getUserId())
+                .username(post.getUser().getUsername())
+                .profileUrl(post.getUser().getImgUrl())
+                .likeCnt((long)post.getLikeCnt())
+                .postUrl(post.getImageUrl())
+                .likeState(likestate(post,user))
+                .build());
     }
 
     public Boolean likestate(Post post, User user) {

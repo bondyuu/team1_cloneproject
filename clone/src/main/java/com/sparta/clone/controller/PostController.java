@@ -30,13 +30,13 @@ public class PostController {
 
 
     @GetMapping("")
-    public ResponseDto<?> getallpost() {
-        return postService.getallpost();
+    public ResponseDto<?> getallpost(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.getallpost(userDetails);
     }
 
     @GetMapping("/{postid}")
-    public ResponseDto<?> getdetailpost(@PathVariable long postid) {
-        return postService.getdetailpost(postid);
+    public ResponseDto<?> getdetailpost(@PathVariable long postid, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.getdetailpost(postid, userDetails);
     }
 
 
