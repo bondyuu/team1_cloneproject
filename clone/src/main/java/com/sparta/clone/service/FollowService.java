@@ -59,7 +59,12 @@ public class FollowService {
         }
 
     }
+    public boolean getFollowState(User user1, User user2) {
 
+        Follow follow = followRepository.findByUserToAndUserFrom(user1, user2);
+
+        return follow != null;
+    }
     public User validateUser(HttpServletRequest request) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return null;
