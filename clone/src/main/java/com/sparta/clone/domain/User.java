@@ -2,6 +2,7 @@ package com.sparta.clone.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sparta.clone.controller.response.ProfileResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,8 +35,8 @@ public class User extends Timestamped {
     @Column
     private String introduction;
 
-
-
+    @Column
+    private String imgUrl;
 
     @Override
     public boolean equals(Object o) {
@@ -57,5 +58,10 @@ public class User extends Timestamped {
     public boolean validatePassword(PasswordEncoder passwordEncoder, String password) {
         return passwordEncoder.matches(password, this.password);
     }
+
+   public void editProfile(ProfileResponseDto responseDto) {
+        this.introduction = responseDto.getIntroduction();
+        this.imgUrl = responseDto.getProfileImage();
+   }
 
 }

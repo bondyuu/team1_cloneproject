@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class PostRequestDto {
-    String title;
     String content;
     String imageUrl;
 }
