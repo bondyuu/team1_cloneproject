@@ -37,10 +37,17 @@ public class Post extends Timestamped {
     @Column
     private int likeCnt;
 
+    @Column
+    @OneToMany(mappedBy = "post",cascade = ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Comment> commentList;
+
     @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Heart> heartList = new LinkedList<>();
 
+    public void addHeartList(Heart heart) {
+        heartList.add(heart);
+    }
     public void like () {
         this.likeCnt += 1;
     }
@@ -48,8 +55,5 @@ public class Post extends Timestamped {
         this.likeCnt -= 1;
     }
 
-    public void addHeartList(Heart heart) {
-        heartList.add(heart);
-    }
 
 }

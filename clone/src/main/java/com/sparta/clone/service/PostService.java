@@ -9,6 +9,7 @@ import com.sparta.clone.controller.response.ResponseDto;
 import com.sparta.clone.domain.Heart;
 import com.sparta.clone.domain.Post;
 import com.sparta.clone.domain.UserDetailsImpl;
+import com.sparta.clone.repository.CommentRepository;
 import com.sparta.clone.repository.HeartRepository;
 import com.sparta.clone.repository.PostRepository;
 import com.sparta.clone.s3.S3UploadService;
@@ -30,6 +31,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     private final HeartRepository heartRepository;
+    private final CommentRepository commentRepository;
 
     //포스트 생성
     public ResponseDto<?> createpost(CreatePostRequestDto postRequestDto) throws IOException {
@@ -39,7 +41,10 @@ public class PostService {
 
     //포스트 전체 조회
     public ResponseDto<?> getallpost() {
-        return ResponseDto.success(postRepository.findAll());
+        List<Post> postList = postRepository.findAll();
+//        postList.forEach(post -> post.setCommentList(commentRepository.findAllByPost(post)));
+
+        return ResponseDto.success(postList);
     }
 
     //포스트 삭제
@@ -51,7 +56,6 @@ public class PostService {
     public ResponseDto<?> likepost(Long postid, UserDetailsImpl userDetails) {
 
         Post post = postRepository.findById(postid).orElseThrow(() -> new RuntimeException("해당하는 포스팅이 없다"));
-
         Long userid = userDetails.getUser().getUserId();
 
         CreateHeartRequestDto createHeartRequestDto = new CreateHeartRequestDto();

@@ -3,11 +3,11 @@ package com.sparta.clone;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class CloneApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//@SpringBootTest
+//class CloneApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//}

@@ -2,6 +2,7 @@ package com.sparta.clone.controller;
 
 
 import com.sparta.clone.controller.request.EditProfileRequestDto;
+import com.sparta.clone.controller.request.IdCheckDto;
 import com.sparta.clone.controller.request.LoginRequestDto;
 import com.sparta.clone.controller.request.SignupRequestDto;
 import com.sparta.clone.controller.response.ResponseDto;
@@ -9,11 +10,11 @@ import com.sparta.clone.domain.UserDetailsImpl;
 import com.sparta.clone.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import java.io.IOException;
 
 @RestController
@@ -43,6 +44,20 @@ public class UserController {
         return userService.logout(request);
     }
 
+
+    //아이디 중복 확인
+    @PostMapping("api/users")
+    public ResponseDto<?> check(@RequestBody IdCheckDto idCheckDto) {
+        return userService.check(idCheckDto);
+    }
+
+    //아이디 검색
+    @GetMapping(path = "/api/users/search", params = "username")
+    public ResponseDto<?> search(@RequestParam String username) {
+        return userService.search(username);
+    }
+
+    //회원정보 수정
     @Transactional
     @PutMapping ("api/users/edit/{userid}")
     public ResponseDto<?> editprofile(EditProfileRequestDto requestDto,@PathVariable long userid, @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
