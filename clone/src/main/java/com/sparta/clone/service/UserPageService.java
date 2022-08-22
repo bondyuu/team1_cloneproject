@@ -3,9 +3,8 @@ package com.sparta.clone.service;
 import com.sparta.clone.controller.dto.PostDto;
 import com.sparta.clone.controller.response.MyPageResponseDto;
 import com.sparta.clone.controller.response.ResponseDto;
-import com.sparta.clone.domain.Heart;
-import com.sparta.clone.domain.Post;
-import com.sparta.clone.domain.User;
+import com.sparta.clone.controller.response.UserPageResponseDto;
+import com.sparta.clone.domain.*;
 import com.sparta.clone.global.error.ErrorCode;
 import com.sparta.clone.jwt.TokenProvider;
 import com.sparta.clone.repository.FollowRepository;
@@ -28,27 +27,31 @@ public class UserPageService {
     private final FollowRepository followRepository;
     private final HeartRepository heartRepository;
     private final UserRepository userRepository;
+    private final FollowService followService;
 
-    public ResponseDto<?> getUserPage(Long userId) {
+    public ResponseDto<?> getUserPage(Long userId, UserDetailsImpl userDetails) {
+        User loginUser = userDetails.getUser();
+
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new IllegalArgumentException("회원정보가 없습니다.")
         );
 
-        //내가 작성한 게시글
+        //해당 유저가 작성한 게시글
         List<PostDto> postList = getPostList(user);
 
-        //내가 좋아요한 게시글
+        //해당 유저가 좋아요한 게시글
         List<PostDto> likePostList = getLikePostList(user);
 
         Long postCnt = (long) postList.size();
         Long follower = (long)followRepository.findAllByUserFrom(user).size();
         Long following = (long)followRepository.findAllByUserTo(user).size();
 
-        return ResponseDto.success(MyPageResponseDto.builder()
+        return ResponseDto.success(UserPageResponseDto.builder()
                 .userId(user.getUserId())
                 .username(user.getUsername())
                 .profileUrl(user.getImgUrl())
                 .introduction(user.getIntroduction())
+                .folloewState(followService.getFollowState(user,loginUser))
                 .follower(follower)
                 .following(following)
                 .postCnt(postCnt)
