@@ -22,6 +22,6 @@ public class PostResponseDto {
     private String postUrl;
     private Long likeCnt;
     private Boolean likeState;
-    private List<Comment> commentList;
+    private List<CommentResponseDto> commentList;
 
 }

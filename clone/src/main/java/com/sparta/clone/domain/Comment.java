@@ -3,6 +3,7 @@ package com.sparta.clone.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Entity @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Comment {
 
     @Id

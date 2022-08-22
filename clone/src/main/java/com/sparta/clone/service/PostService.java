@@ -4,6 +4,7 @@ import com.amazonaws.services.kms.model.CreateGrantRequest;
 import com.sparta.clone.controller.request.CreateHeartRequestDto;
 import com.sparta.clone.controller.request.CreatePostRequestDto;
 import com.sparta.clone.controller.request.PostRequestDto;
+import com.sparta.clone.controller.response.CommentResponseDto;
 import com.sparta.clone.controller.response.LikeResponseDto;
 import com.sparta.clone.controller.response.PostResponseDto;
 import com.sparta.clone.controller.response.ResponseDto;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -55,6 +57,15 @@ public class PostService {
                         .likeCnt((long)post.getLikeCnt())
                         .postUrl(post.getImageUrl())
                         .likeState(likestate(post,user))
+                        .commentList(commentRepository.findAllByPost(post).stream()
+                                .map(comment -> CommentResponseDto.builder()
+                                        .commentId(comment.getCommentId())
+                                        .userId(comment.getUser().getUserId())
+                                        .username(comment.getUser().getUsername())
+                                        .imgUrl(comment.getUser().getImgUrl())
+                                        .comment(comment.getComment())
+                                        .build())
+                                .collect(Collectors.toList()))
                         .build()));
     }
 
@@ -115,6 +126,15 @@ public class PostService {
                 .likeCnt((long)post.getLikeCnt())
                 .postUrl(post.getImageUrl())
                 .likeState(likestate(post,user))
+                .commentList(commentRepository.findAllByPost(post).stream()
+                                                                  .map(comment -> CommentResponseDto.builder()
+                                                                                                    .commentId(comment.getCommentId())
+                                                                                                    .userId(comment.getUser().getUserId())
+                                                                                                    .username(comment.getUser().getUsername())
+                                                                                                    .imgUrl(comment.getUser().getImgUrl())
+                                                                                                    .comment(comment.getComment())
+                                                                                                    .build())
+                                                                  .collect(Collectors.toList()))
                 .build());
     }
 
