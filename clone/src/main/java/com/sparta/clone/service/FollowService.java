@@ -43,7 +43,7 @@ public class FollowService {
 
         //pathvariable로 누구를 팔로우할지
         User user1 = userRepository.findById(userId).orElseThrow(
-                () -> new IllegalArgumentException("회원 정보가 없습니다.")
+                () -> new IllegalArgumentException(String.valueOf(ErrorCode.USER_NOT_FOUND))
         );
 
         if (requestDto.getFollowState() == 0) {
