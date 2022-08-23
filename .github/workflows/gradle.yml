@@ -30,10 +30,11 @@ jobs:
           distribution: 'temurin'
       - name: Grant execute permission for gradlew
         run: chmod +x ./clone/gradlew
-        
-      - name: Gradle Init
-        run: ./clone/gradlew init	
+        shell: bash
+#       - name: Gradle Init
+#         run: ./clone/gradlew init	
 
       # Build
       - name: Build with Gradle
         run: ./clone/gradlew build
+        shell: bash
