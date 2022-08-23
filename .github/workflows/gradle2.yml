@@ -22,23 +22,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Set up JDK 11
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v1
         with:
           java-version: '11'
-          distribution: 'temurin'
-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       # Build
       - name: Build with Gradle
         run: ./gradlew clean build
-
     # 전송할 파일을 담을 디렉토리 생성
       - name: Make Directory for deliver
         run: mkdir deploy
-
     # Jar 파일 Copy
       - name: Copy Jar
         run: cp ./build/libs/*.jar ./deploy/
