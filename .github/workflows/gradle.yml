@@ -29,12 +29,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
       - name: Grant execute permission for gradlew
-        run: chmod +x ./clone/gradlew
+        run: cd clone && chmod +x ./gradlew
         shell: bash
 #       - name: Gradle Init
 #         run: ./clone/gradlew init	
 
       # Build
       - name: Build with Gradle
-        run: ./clone/gradlew build
+        run: cd clone && ./gradlew build
         shell: bash
