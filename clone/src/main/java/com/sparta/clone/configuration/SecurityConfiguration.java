@@ -68,9 +68,11 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .requestMatchers(request -> CorsUtils.isPreFlightRequest(request)).permitAll()
                 .antMatchers("/h2-console/**").permitAll()  //h2-console 해제
-                .antMatchers("/api/users/**").permitAll()   //signup, login 해제
-                .antMatchers(HttpMethod.GET, "/api/posts").permitAll()  //게시글 목록 조회 해제
-                .antMatchers(HttpMethod.GET, "/api/posts/**").permitAll()  //게시글 조회 해제
+                .antMatchers("/api/users/signup").permitAll()   //signup, login 해제
+                .antMatchers("/api/users/login").permitAll()
+                .antMatchers("/api/users").permitAll()
+//                .antMatchers(HttpMethod.GET, "/api/posts").permitAll()  //게시글 목록 조회 해제
+//                .antMatchers(HttpMethod.GET, "/api/posts/**").permitAll()  //게시글 조회 해제
                 .antMatchers("/api/user/**").permitAll()
                 .anyRequest().authenticated()
 

@@ -2,6 +2,7 @@ package com.sparta.clone.service;
 
 import com.sparta.clone.domain.User;
 import com.sparta.clone.domain.UserDetailsImpl;
+import com.sparta.clone.global.error.ErrorCode;
 import com.sparta.clone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     Optional<User> member = userRepository.findByUsername(username);
     return member
         .map(UserDetailsImpl::new)
-        .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        .orElseThrow(() -> new UsernameNotFoundException(String.valueOf(ErrorCode.USER_NOT_FOUND)));
   }
 }

@@ -105,13 +105,8 @@ public class UserService {
 
     public ResponseDto<?> search(String username) {
         List<User> userList = userRepository.findAllByUsernameContainingIgnoreCase(username);
-
-        if (userList.size() <= 5) {
+        
             return ResponseDto.success(userList.stream().map(user -> new UserDto(user)).collect(Collectors.toList()));
-        } else {
-            List<User> userList1 = userList.subList(0,5);
-            return ResponseDto.success(userList1.stream().map(user -> new UserDto(user)).collect(Collectors.toList()));
-        }
     }
 
 
@@ -133,7 +128,7 @@ public class UserService {
             return ResponseDto.fail(ErrorCode.POST_UNAUTHORIZED);
         }
 
-        User user = userRepository.findById(userid).orElseThrow(() -> new RuntimeException("찾을수없음"));
+        User user = userRepository.findById(userid).orElseThrow(() -> new IllegalArgumentException(String.valueOf(ErrorCode.USER_NOT_FOUND)));
 
 
             String imgUrl = s3UploadService.upload(requestDto.getImgFIle(),"static");

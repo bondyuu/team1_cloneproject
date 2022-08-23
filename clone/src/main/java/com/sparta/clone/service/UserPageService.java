@@ -33,7 +33,7 @@ public class UserPageService {
         User loginUser = userDetails.getUser();
 
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new IllegalArgumentException("회원정보가 없습니다.")
+                () -> new IllegalArgumentException(String.valueOf(ErrorCode.USER_NOT_FOUND))
         );
 
         //해당 유저가 작성한 게시글
