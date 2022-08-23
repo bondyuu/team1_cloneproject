@@ -40,9 +40,11 @@ jobs:
       - name: Make Directory for deliver
         run: mkdir ./clone/deploy
         
-#       - name: move to directory
-#         run: cd clone/build/libs
-        
+      - name: see all list
+        run: ls
+      
+      - name: move to directory
+        run: cd clone/build/libs
       - name: see all list
         run: ls
     # Jar 파일 Copy
