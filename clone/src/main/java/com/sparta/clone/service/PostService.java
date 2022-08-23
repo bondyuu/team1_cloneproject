@@ -54,6 +54,7 @@ public class PostService {
                         .userId(post.getUser().getUserId())
                         .username(post.getUser().getUsername())
                         .profileUrl(post.getUser().getImgUrl())
+                        .content(post.getContent())
                         .likeCnt((long)post.getLikeCnt())
                         .postUrl(post.getImageUrl())
                         .likeState(likestate(post,user))

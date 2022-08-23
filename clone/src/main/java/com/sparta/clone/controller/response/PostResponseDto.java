@@ -19,6 +19,7 @@ public class PostResponseDto {
     private Long userId;
     private String username;
     private String profileUrl;
+    private String content;
     private String postUrl;
     private Long likeCnt;
     private Boolean likeState;
