@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -21,6 +22,7 @@ public class PostResponseDto {
     private String profileUrl;
     private String content;
     private String postUrl;
+    private LocalDateTime createdAt;
     private Long likeCnt;
     private Boolean likeState;
     private List<CommentResponseDto> commentList;
