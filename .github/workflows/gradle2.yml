@@ -46,7 +46,7 @@ jobs:
         run: ls
       
       - name: move to directory
-        run: cd clone && ls -al
+        run: cd clone && cd build && cd libs && ls -al
 
     # Jar 파일 Copy
       - name: Copy Jar
