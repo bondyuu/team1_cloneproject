@@ -33,13 +33,11 @@ jobs:
         
       - name: Gradle Init
         run: ./clone/gradlew init
-      - name: asdf
-        run : ls
+
       # Build
       - name: Build with Gradle
         run: ./clone/gradlew build --stacktrace
-      - name: after build
-        run: ls
+
     # 전송할 파일을 담을 디렉토리 생성
       - name: Make Directory for deliver
         run: mkdir ./clone/deploy
@@ -48,9 +46,8 @@ jobs:
         run: ls
       
       - name: move to directory
-        run: cd clone
-      - name: see all list
-        run: ls
+        run: cd clone && ls -al
+
     # Jar 파일 Copy
       - name: Copy Jar
         run: cp ./clone/build/libs/clone-0.0.1-SNAPSHOT.jar ./clone/deploy/
