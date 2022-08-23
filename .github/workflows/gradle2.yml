@@ -41,7 +41,7 @@ jobs:
         run: mkdir ./clone/deploy
         
       - name: move to directory
-        run: cd ./clone/build/libs
+        run: cd clone
         
       - name: see all list
         run: ls
