@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class CloneApplication {
 
 	static {
-		System.setProperty("spring.config.location", "classpath:/application.yml,classpath:/jwt.yml,classpath:/application-aws.yml");
+		System.setProperty("spring.config.location", "/home/ubuntu/application.yml");
 	}
 
 	public static void main(String[] args) {
