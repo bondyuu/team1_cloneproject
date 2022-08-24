@@ -1,0 +1,61 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  servlet:
+    multipart:
+      maxFilesize: 10MB
+      maxRequestSize: 10MB
+
+#  datasource:
+#    url: jdbc:h2:mem:clone
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
+#
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database-3.cyggh9yzs5m7.ap-northeast-2.rds.amazonaws.com:3306/database3
+    username: admin
+    password: asdf1234
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+server:
+  error:
+    include-exception: false # Response? Exception ?? ??
+    include-message: always # Response? Exception Message ?? ??
+    include-stacktrace: on_param # Response? Stack Trace ?? ??
+  servlet:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
+    # application-real2.properties
+  port: 8082
+
+
+
+# echo 'spring-boot-security-jwt-hanghae-assignment-spring-boot-security-jwt-secret-key' | base64
+jwt:
+  secret: 4oCYc3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LWhhbmdoYWUtYXNzaWdubWVudC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3Qtc2VjcmV0LWtleeKAmQo=
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA3H4SQ5M3OJPPDZUG
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3:
+      bucket: sparta-clone-bucket
+
