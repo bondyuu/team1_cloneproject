@@ -68,6 +68,7 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .requestMatchers(request -> CorsUtils.isPreFlightRequest(request)).permitAll()
                 .antMatchers("/h2-console/**").permitAll()  //h2-console 해제
+                .antMatchers("/profile").permitAll()
                 .antMatchers("/api/users/signup").permitAll()   //signup, login 해제
                 .antMatchers("/api/users/login").permitAll()
                 .antMatchers("/api/users").permitAll()
