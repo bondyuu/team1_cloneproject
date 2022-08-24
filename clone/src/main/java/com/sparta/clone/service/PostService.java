@@ -12,6 +12,7 @@ import com.sparta.clone.domain.Heart;
 import com.sparta.clone.domain.Post;
 import com.sparta.clone.domain.User;
 import com.sparta.clone.domain.UserDetailsImpl;
+import com.sparta.clone.global.error.ErrorCode;
 import com.sparta.clone.repository.CommentRepository;
 import com.sparta.clone.repository.HeartRepository;
 import com.sparta.clone.repository.PostRepository;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -72,7 +74,18 @@ public class PostService {
     }
 
     //포스트 삭제
-    public ResponseDto<?> deletepost(Long postid) {
+    public ResponseDto<?> deletepost(Long postid,UserDetailsImpl userDetails) {
+
+        Post post = postRepository.findById(postid).orElseThrow(
+                () -> new RuntimeException("해당하는 게시글이 없습니다")
+        );
+
+        System.out.println(userDetails.getUser().getUsername());
+
+        if (!Objects.equals(post.getUser().getUserId(), userDetails.getUser().getUserId())) {
+            return ResponseDto.fail(ErrorCode.POST_UNAUTHORIZED);
+        }
+
         postRepository.deleteById(postid);
         return ResponseDto.success(postid);
     }

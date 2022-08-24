@@ -41,8 +41,8 @@ public class PostController {
 
 
     @DeleteMapping("/{postid}")
-    public ResponseDto<?> deletepost(@PathVariable Long postid) {
-        return postService.deletepost(postid);
+    public ResponseDto<?> deletepost(@PathVariable Long postid,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.deletepost(postid,userDetails);
     }
 
     @PostMapping("/like/{postid}")
