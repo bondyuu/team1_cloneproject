@@ -17,6 +17,8 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+src/main/resources/application-real1.yml
+src/main/resources/application-real2.yml
 src/main/resources/application-aws.yml
 src/main/resources/jwt.yml
 

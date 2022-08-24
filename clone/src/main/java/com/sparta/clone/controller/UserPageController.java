@@ -18,8 +18,8 @@ public class UserPageController {
 
     private final UserPageService userPageService;
 
-    @GetMapping("api/detail/{userId}")
-    public ResponseDto<?> getUserPage(@PathVariable Long userId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return userPageService.getUserPage(userId, userDetails);
+    @GetMapping("api/detail/{username}")
+    public ResponseDto<?> getUserPage(@PathVariable String username, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return userPageService.getUserPage(username, userDetails);
     }
 }
