@@ -29,10 +29,10 @@ public class UserPageService {
     private final UserRepository userRepository;
     private final FollowService followService;
 
-    public ResponseDto<?> getUserPage(Long userId, UserDetailsImpl userDetails) {
+    public ResponseDto<?> getUserPage(String username, UserDetailsImpl userDetails) {
         User loginUser = userDetails.getUser();
 
-        User user = userRepository.findById(userId).orElseThrow(
+        User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalArgumentException(String.valueOf(ErrorCode.USER_NOT_FOUND))
         );
 
