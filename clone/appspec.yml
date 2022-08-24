@@ -14,6 +14,7 @@ hooks:
   ApplicationStart:
     - location: deploy.sh
       timeout: 60
+      runas: ubuntu
 #  AfterInstall:
 #    - location: stop.sh # nginx와 연결되지 않은 스프링 부트 종료.
 #      timeout: 60

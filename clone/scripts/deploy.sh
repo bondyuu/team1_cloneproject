@@ -1,10 +1,7 @@
 #!/bin/bash
 
-REPOSITORY=/home/ubuntu/app/travis
+REPOSITORY=/home/ubuntu/app/deploy
 
-echo "> Build 파일 복사"
-
-cp $REPOSITORY/build/build/libs/*.jar $REPOSITORY/jar
 
 echo "> 현재 구동중인 애플리케이션 pid 확인"
 
@@ -22,7 +19,7 @@ fi
 
 echo "> 새 어플리케이션 배포"
 
-JAR_NAME=$(ls -tr $REPOSITORY/jar/*.jar | tail -n 1)
+JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
 
 echo "> JAR Name: $JAR_NAME"
 
