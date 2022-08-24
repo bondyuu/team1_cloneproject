@@ -9,9 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing //
 public class CloneApplication {
 
-	static {
-		System.setProperty("spring.config.location", "/home/ubuntu/application.yml");
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CloneApplication.class, args);
