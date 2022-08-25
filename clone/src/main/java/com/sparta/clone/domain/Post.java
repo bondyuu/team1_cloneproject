@@ -38,7 +38,7 @@ public class Post extends Timestamped {
     private int likeCnt;
 
     @Column
-    @OneToMany(mappedBy = "post",cascade = ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "post",cascade = ALL, orphanRemoval = true, fetch = FetchType.Lazy)
     private List<Comment> commentList;
 
     @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
