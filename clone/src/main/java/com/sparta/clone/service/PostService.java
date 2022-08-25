@@ -18,6 +18,7 @@ import com.sparta.clone.repository.HeartRepository;
 import com.sparta.clone.repository.PostRepository;
 import com.sparta.clone.s3.S3UploadService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,7 +49,7 @@ public class PostService {
     //포스트 전체 조회
     public ResponseDto<?> getallpost(UserDetailsImpl userDetails) {
         User user = userDetails.getUser();
-        List<Post> postList = postRepository.findAll();
+        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 //        postList.forEach(post -> post.setCommentList(commentRepository.findAllByPost(post)));
         return ResponseDto.success(postList.stream()
                 .map(post -> PostResponseDto.builder()
